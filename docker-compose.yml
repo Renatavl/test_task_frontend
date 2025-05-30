@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+  api:
+    build:
+      context: .
+    image: node:18
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: sh -c "npm install -g json-server && json-server --watch ./companies-lookup.json --port 3001"
+    ports:
+      - "3001:3001"
